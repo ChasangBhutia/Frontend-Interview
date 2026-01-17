@@ -1,42 +1,44 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* =====================
+   LIGHT MODE SCROLLBAR
+   ===================== */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::-webkit-scrollbar-thumb {
+    background-color: #e5e7eb;
+    /* gray-200 */
+    border-radius: 9999px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+::-webkit-scrollbar-thumb:hover {
+    background-color: #cbd5f5;
+    /* blue-ish */
 }
 
-.card {
-  padding: 2em;
+/* =====================
+   DARK MODE SCROLLBAR
+   ===================== */
+.dark ::-webkit-scrollbar-thumb {
+    background-color: #3f3f46;
+    /* zinc-700 */
 }
 
-.read-the-docs {
-  color: #888;
+.dark ::-webkit-scrollbar-thumb:hover {
+    background-color: #60a5fa;
+    /* blue-400 */
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #e5e7eb transparent;
+}
+
+.dark * {
+    scrollbar-color: #3f3f46 transparent;
 }
