@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import BlogDetails from './components/BlogDetails'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function App() {
   const [blogId, setBlogId] = useState<number | null>(null);
@@ -23,6 +24,7 @@ function App() {
 
   const {
     data: blog,
+    isLoading: detailLoading,
   } = useQuery({
     queryKey: ["blog-by-id", blogId],
     queryFn: () => getBlogById(blogId as number),
@@ -31,34 +33,38 @@ function App() {
 
   return (
     <div className="h-screen w-full overflow-hidden flex flex-col md:flex-row p-3 bg-gray-100 dark:bg-[#000000]">
-      {/* Sidebar */}
-      <div className="w-[25%] md:h-full h-auto border-r rounded">
-        <Sidebar blogId={blogId} setBlogId={setBlogId} blogs={blogs || []} />
+      <div className="w-[300px] md:h-full xl:w-2/6 h-auto rounded py-2">
+        <Sidebar isLoading={isLoading} blogId={blogId} setBlogId={setBlogId} blogs={blogs || []} />
       </div>
 
-      {/* Blog Details */}
-      <div className="flex-1 w-[75%] flex flex-col gap-2 p-5 pb-0">
+      <div className="w-full flex flex-col gap-2 p-1 pb-0 sm:p-3 md:p-6 overflow-y-auto md:overflow-y-hidden">
         <Navbar title={blog?.title ?? 'Blog Details'}/>
         
-        {blog ? (
-          <div className='overflow-y-auto'>
-            <div className='my-3'>
-              <h1 className='text-5xl mb-2'>
-                Discover Insights & Stories
-              </h1>
-              <h1 className='text-xl'>
-                Practical tutorials, tech insights, and ideas worth sharing.
-              </h1>
-            </div>
-            <div className='flex flex-col gap-2'>
-              <BlogDetails {...blog} />
-            </div>
+        {
+          detailLoading ? 
+          <div className='w-full h-full flex justify-center items-center'>
+            <AiOutlineLoading3Quarters className='animate-spin' size={70}/>
           </div>
-        ) : (
-          <div className="h-full flex items-center justify-center text-gray-500">
-            Select a blog to view details
-          </div>
-        )}
+          : blog ? (
+              <div className='overflow-y-auto'>
+                <div className='my-3'>
+                  <h1 className='text-3xl mb-2'>
+                    Discover Insights & Stories
+                  </h1>
+                  <h1 className='text-xl'>
+                    Practical tutorials, tech insights, and ideas worth sharing.
+                  </h1>
+                </div>
+                <div className='flex flex-col gap-2'>
+                  <BlogDetails {...blog} />
+                </div>
+              </div>
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-500">
+                Select a blog to view details
+              </div>
+            )
+        }
         <Footer />
       </div>
     </div>
